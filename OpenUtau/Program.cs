@@ -20,16 +20,16 @@ namespace OpenUtau.App {
         // yet and stuff might break.
         [STAThread]
         public static void Main(string[] args) {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            InitLogging();
-            string processName = Process.GetCurrentProcess().ProcessName;
-            if (processName != "dotnet") {
-                var exists = Process.GetProcessesByName(processName).Count() > 1;
-                if (exists) {
-                    Log.Information($"Process {processName} already open. Exiting.");
-                    return;
-                }
-            }
+            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            //InitLogging();
+            //string processName = Process.GetCurrentProcess().ProcessName;
+           // if (processName != "dotnet") {
+           //     var exists = Process.GetProcessesByName(processName).Count() > 1;
+           //     if (exists) {
+           //         Log.Information($"Process {processName} already open. Exiting.");
+           //         return;
+           //     }
+           // }
             Log.Information($"{Environment.OSVersion}");
             Log.Information($"{RuntimeInformation.OSDescription} " +
                 $"{RuntimeInformation.OSArchitecture} " +

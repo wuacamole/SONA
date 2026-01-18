@@ -15,9 +15,10 @@ namespace OpenUtau.Core.Render {
         public const string VOGEN = "VOGEN";
         public const string DIFFSINGER = "DIFFSINGER";
         public const string VOICEVOX = "VOICEVOX";
+        public const string LLM_TEST = "LLM-TEST";
 
         static readonly string[] classicRenderers = new[] { WORLDLINE_R, CLASSIC };
-        static readonly string[] enunuRenderers = new[] { ENUNU };
+        static readonly string[] enunuRenderers = new[] { LLM_TEST, ENUNU };
         static readonly string[] vogenRenderers = new[] { VOGEN };
         static readonly string[] diffSingerRenderers = new[] { DIFFSINGER };
         static readonly string[] voicevoxRenderers = new[] { VOICEVOX };
@@ -49,17 +50,23 @@ namespace OpenUtau.Core.Render {
 }
 
 
-        public static string GetDefaultRenderer(USingerType singerType) {
-            if (Preferences.Default.DefaultRenderer == "Classic" && singerType == USingerType.Classic) {
-                return CLASSIC;
-            } else {
-                return GetSupportedRenderers(singerType)[0];
+    public static string GetDefaultRenderer(USingerType singerType) {
+        var supported = GetSupportedRenderers(singerType);
+            if (supported.Length == 0) {
+                return null;
             }
-        }
+         return supported[0];
+    }
+
+
+
+
 
         public static IRenderer CreateRenderer(string renderer) {
             if (renderer == CLASSIC) {
                 return new ClassicRenderer();
+            } else if (renderer == LLM_TEST) {
+                return new LlmRenderer();
             } else if (renderer == WORLDLINE_R2) {
                 return new WorldlineRenderer(version: 2);
             } else if (renderer?.StartsWith(WORLDLINE_R.Substring(0, 9)) ?? false) {
